@@ -21,4 +21,6 @@ from django.urls import include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('guard/', include('guard.urls')),
+    path('kuber/', include('kuber.urls')),
+    path('saraswati/', include('saraswati.urls')),
 ]

@@ -9,7 +9,7 @@ function Header() {
                <img src={logo} width={180} height={122} />
             </div>
             <div className={styles.LinkContainer}>
-                <Link to="/home">Home</Link>
+                <Link to="/">Home</Link>
                 <Link to="/about">About</Link>
                 <Link to="/contact">Contact Us</Link>
                 <Link to='/login'>

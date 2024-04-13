@@ -4,10 +4,13 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 from .serializers import UserSerializer
 from rest_framework import status
-from .serializers import UserDetailSerializer
+from .serializers import UserDetailSerializer, ProfileSerializer
 from rest_framework.authtoken.models import Token
 from django.core.exceptions import ValidationError
 import logging
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import permission_classes, authentication_classes
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 
 # Create your views here.
 
@@ -21,7 +24,7 @@ def login(request):
         user = User.objects.get(username=request.data['user']['username'])
         logger.info(user)
         if user.check_password(request.data['user']['password']):
-            token = Token.objects.create(user=User.objects.get(username=request.data['user']['username']))
+            token = Token.objects.get(user=User.objects.get(username=request.data['user']['username']))
             return Response({'message': 'Login successful','token':token.key}, status=status.HTTP_200_OK)
         else:
             return Response({'message': 'Invalid credentials'}, status=status.HTTP_203_NON_AUTHORITATIVE_INFORMATION)
@@ -53,3 +56,11 @@ def register(request):
             return Response({'message': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
     except KeyError:
         return Response({'message': 'Invalid request'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+@authentication_classes([TokenAuthentication, SessionAuthentication])
+def getProfile(request):
+    serializer = ProfileSerializer(instance=request.user)
+    return Response(serializer.data, status=status.HTTP_200_OK)
