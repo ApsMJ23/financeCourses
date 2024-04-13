@@ -25,16 +25,26 @@ function LoginScreen() {
     }
   return (
     <div>
+        <div className={styles.color}>
         <div className={styles.FormContainer}>
-            <label>
-                Username:
+        <label>
+                Email<br/>
                 <input value={userDetails.username} type="text" name="name" onChange={(e)=>setUserDetails({...userDetails,username:e.target.value})} />
             </label>
             <label>
-                Password:
+                Username<br/>
+                <input value={userDetails.username} type="text" name="name" onChange={(e)=>setUserDetails({...userDetails,username:e.target.value})} />
+            </label>
+            <label>
+                Password<br/>
+                <input value={userDetails.password} type="password" name="password" onChange={(e)=>setUserDetails({...userDetails,password:e.target.value})} />
+            </label>
+            <label>
+                Confirm Password<br/>
                 <input value={userDetails.password} type="password" name="password" onChange={(e)=>setUserDetails({...userDetails,password:e.target.value})} />
             </label>
             <button onClick={()=>handleClick()} >Submit</button>
+        </div>
         </div>
     </div>
   )
